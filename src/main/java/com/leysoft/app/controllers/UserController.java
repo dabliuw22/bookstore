@@ -9,7 +9,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
-import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,8 +25,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.leysoft.app.entitys.PasswordResetToken;
 import com.leysoft.app.entitys.User;
 import com.leysoft.app.services.imple.CustomUserDetailService;
+import com.leysoft.app.services.inter.MailService;
 import com.leysoft.app.services.inter.UserService;
-import com.leysoft.app.utilitys.MailConstructor;
 import com.leysoft.app.utilitys.SecurityUtil;
 import com.leysoft.app.utilitys.converters.inter.Converter;
 import com.leysoft.app.utilitys.models.UserModel;
@@ -49,10 +48,7 @@ public class UserController {
 	private Converter<User, UserModel> userConverter;
 	
 	@Autowired
-	private JavaMailSender mailSender;
-	
-	@Autowired
-	private MailConstructor mailConstructor;
+	private MailService mailService;
 	
 	@GetMapping(value = "/add")
 	public String add(Model model) {
@@ -71,7 +67,7 @@ public class UserController {
 			String token = UUID.randomUUID().toString();
 			userService.createPasswordResetTokenForUser(newUser, token);
 			String url = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-			mailSender.send(mailConstructor.constructResetTokenEmail(url, request.getLocale(), token, newUser, password, mailSender));
+			mailService.sendEmailHtml(url, request.getLocale(), token, newUser, password);
 			redirect.addFlashAttribute("message", "Se ha enviado a tu e-mail un correo para continuar el proceso de registro");
 			return "redirect:/";
 		}
@@ -120,7 +116,7 @@ public class UserController {
 				String token = UUID.randomUUID().toString();
 				userService.createPasswordResetTokenForUser(user, token);
 				String url = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-				mailSender.send(mailConstructor.constructResetTokenEmail(url, request.getLocale(), token, user, password, mailSender));
+				mailService.sendEmailHtml(url, request.getLocale(), token, user, password);
 				redirect.addFlashAttribute("message", "Se ha enviado a tu e-mail un correo");
 				return "redirect:/";
 			}
