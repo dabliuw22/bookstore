@@ -27,7 +27,6 @@ import com.leysoft.app.entitys.PasswordResetToken;
 import com.leysoft.app.entitys.User;
 import com.leysoft.app.services.imple.CustomUserDetailService;
 import com.leysoft.app.services.inter.UserService;
-import com.leysoft.app.utilitys.MailConstructor;
 import com.leysoft.app.utilitys.SecurityUtil;
 import com.leysoft.app.utilitys.converters.inter.Converter;
 import com.leysoft.app.utilitys.models.UserModel;
@@ -48,12 +47,6 @@ public class UserController {
 	@Autowired
 	private Converter<User, UserModel> userConverter;
 	
-	@Autowired
-	private JavaMailSender mailSender;
-	
-	@Autowired
-	private MailConstructor mailConstructor;
-	
 	@GetMapping(value = "/add")
 	public String add(Model model) {
 		model.addAttribute("user", new UserModel());
@@ -71,7 +64,6 @@ public class UserController {
 			String token = UUID.randomUUID().toString();
 			userService.createPasswordResetTokenForUser(newUser, token);
 			String url = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-			mailSender.send(mailConstructor.constructResetTokenEmail(url, request.getLocale(), token, newUser, password, mailSender));
 			redirect.addFlashAttribute("message", "Se ha enviado a tu e-mail un correo para continuar el proceso de registro");
 			return "redirect:/";
 		}
@@ -120,7 +112,6 @@ public class UserController {
 				String token = UUID.randomUUID().toString();
 				userService.createPasswordResetTokenForUser(user, token);
 				String url = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-				mailSender.send(mailConstructor.constructResetTokenEmail(url, request.getLocale(), token, user, password, mailSender));
 				redirect.addFlashAttribute("message", "Se ha enviado a tu e-mail un correo");
 				return "redirect:/";
 			}
