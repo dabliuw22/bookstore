@@ -8,3 +8,4 @@ target/
 .project
 .settings
 .springBeans
+src/main/resources/static/img/
