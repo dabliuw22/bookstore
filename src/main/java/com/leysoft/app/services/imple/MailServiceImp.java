@@ -7,6 +7,7 @@ import javax.mail.internet.MimeMessage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
@@ -47,7 +48,7 @@ public class MailServiceImp implements MailService {
 	@Async
 	@Override
 	public void sendEmailHtml(String url, Locale locale, String token, User user, String password)
-			throws MessagingException {
+			throws MessagingException, MailException {
 		MimeMessage message = mailSender.createMimeMessage();
 		Context context = new Context();
 		url += "/registro?token=" + token;
