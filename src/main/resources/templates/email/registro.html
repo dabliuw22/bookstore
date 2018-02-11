@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+	<meta charset="UTF-8"/>
+</head>
+<body>
+	<div class="alert alert-success" role="alert">
+		<h4 class="alert-heading" th:text="'Bienvenido ' + ${username}"></h4>
+		<p>Click <a th:href="@{${link}}" class="alert-link" th:text="' aquí'"></a> para verificar tu cuenta y editar tus credenciales.</p>
+		<hr/>
+		<p class="mb-0" th:text="'Tu nuevo password es: ' + ${password}"></p>
+	</div>
+</body>
+</html>

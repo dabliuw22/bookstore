@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="head">
+	<meta charset="UTF-8"/>
+	<title>BookStore</title>
+	<meta name="viewport" 
+		content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"/>
+	<link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap.min.css}"/>
+	<link rel="stylesheet" th:href="@{/css/bootstrap/bootstrap-grid.min.css}"/>
+	<link rel="stylesheet" th:href="@{/css/styles.css}"/>
+</head>
+<body>
+	<div th:fragment="information">
+		<div class="alert alert-primary" role="alert" th:if="${message != null}" th:text="${message}"></div>
+		<div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
+	</div>
+	<footer th:fragment="footer">
+		<script type="text/javascript" th:src="@{/js/jquery/jquery-3.2.1.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+		<script type="text/javascript" th:src="@{/js/main.js}"></script>
+	</footer>
+</body>
+</html>

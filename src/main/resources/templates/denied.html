@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="base/base :: head"></head>
+<body>
+	<header th:replace="include/navbar :: header"></header>
+	<div class="container mt-3 mb-3">
+		<div>
+			<img class="img-fluid" th:src="@{/img/denied.png}"/>
+		</div>
+		<div>
+			<h4 class="text-danger">Acceso Denegado</h4>
+			<p class="text-danger">El usuario no cuenta con los permisos requeridos para acceder a la página.
+			   No es posible realizar la acción.</p>
+		</div>
+	</div>
+	<footer th:replace="base/base :: footer"></footer>
+</body>
+</html>
