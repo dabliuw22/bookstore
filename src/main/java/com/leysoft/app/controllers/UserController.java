@@ -1,7 +1,6 @@
 package com.leysoft.app.controllers;
 
 import java.util.Locale;
-import java.util.UUID;
 
 import javax.mail.MessagingException;
 import javax.servlet.http.HttpServletRequest;
@@ -9,10 +8,6 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
-import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -24,11 +19,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.leysoft.app.entitys.PasswordResetToken;
 import com.leysoft.app.entitys.User;
-import com.leysoft.app.services.imple.CustomUserDetailService;
-import com.leysoft.app.services.inter.MailService;
+import com.leysoft.app.services.inter.SecurityService;
 import com.leysoft.app.services.inter.UserService;
-import com.leysoft.app.utilitys.SecurityUtil;
-import com.leysoft.app.utilitys.converters.inter.Converter;
 import com.leysoft.app.utilitys.models.UserModel;
 import com.leysoft.app.utilitys.validators.UserValidator;
 
@@ -39,16 +31,10 @@ public class UserController {
 	private UserService userService;
 	
 	@Autowired
-	private CustomUserDetailService userDetailService;
+	private SecurityService securityService;
 	
 	@Autowired
 	private UserValidator userValidator;
-	
-	@Autowired
-	private Converter<User, UserModel> userConverter;
-
-	@Autowired
-	private MailService mailService;
 	
 	@GetMapping(value = "/add")
 	public String add(Model model) {
@@ -61,13 +47,7 @@ public class UserController {
 			Model model, HttpServletRequest request, RedirectAttributes redirect) throws MailException, MessagingException {
 		userValidator.validate(user, errors);
 		if(!errors.hasErrors()) {
-			User newUser = userConverter.modelToEntity(user);
-			String password = SecurityUtil.randomPassword();
-			userService.save(newUser, password);
-			String token = UUID.randomUUID().toString();
-			userService.createPasswordResetTokenForUser(newUser, token);
-			String url = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-			mailService.sendEmailHtml(url, request.getLocale(), token, newUser, password);
+			securityService.saveUser(user, request);
 			redirect.addFlashAttribute("message", "Se ha enviado a tu e-mail un correo para continuar el proceso de registro");
 			return "redirect:/";
 		}
@@ -83,9 +63,7 @@ public class UserController {
 			return "redirect:/add";
 		}
 		User user = passwordResetToken.getUser();
-		UserDetails userDetails = userDetailService.loadUserByUsername(user.getUsername());
-		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
-		SecurityContextHolder.getContext().setAuthentication(authentication);
+		securityService.authentication(user);
 		model.addAttribute("user", user);
 		return "user/registro";
 	}
@@ -110,13 +88,7 @@ public class UserController {
 			Model model, HttpServletRequest request, RedirectAttributes redirect) throws MailException, MessagingException {
 			User user = userService.findByEmail(email);
 			if(user != null) {
-				String password = SecurityUtil.randomPassword();
-				user.setPassword(SecurityUtil.passwordEncoder().encode(password));
-				userService.update(user);
-				String token = UUID.randomUUID().toString();
-				userService.createPasswordResetTokenForUser(user, token);
-				String url = "http://" + request.getServerName() + ":" + request.getServerPort() + request.getContextPath();
-				mailService.sendEmailHtml(url, request.getLocale(), token, user, password);
+				securityService.resetPasswordUser(user, request);
 				redirect.addFlashAttribute("message", "Se ha enviado a tu e-mail un correo");
 				return "redirect:/";
 			}
