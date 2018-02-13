@@ -54,7 +54,7 @@ public class User implements Serializable, UserDetails {
 	private boolean activo;
 
 	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
-	@JoinTable(name = "roles_por_usuaario", joinColumns = {@JoinColumn(name = "usuario_id", nullable = false)},
+	@JoinTable(name = "roles_por_usuario", joinColumns = {@JoinColumn(name = "usuario_id", nullable = false)},
 		inverseJoinColumns = {@JoinColumn(name = "rol_id", nullable = false)})
 	private List<Role> roles;
 	
