@@ -8,6 +8,7 @@ import java.util.List;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -52,9 +53,9 @@ public class User implements Serializable, UserDetails {
 	@Column
 	private boolean activo;
 
-	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST})
-	@JoinTable(name = "roles_por_usuaario", joinColumns = {@JoinColumn(name = "rol_id", nullable = false)},
-		inverseJoinColumns = {@JoinColumn(name = "usuario_id", nullable = false)})
+	@ManyToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST}, fetch = FetchType.EAGER)
+	@JoinTable(name = "roles_por_usuaario", joinColumns = {@JoinColumn(name = "usuario_id", nullable = false)},
+		inverseJoinColumns = {@JoinColumn(name = "rol_id", nullable = false)})
 	private List<Role> roles;
 	
 	public User() {
@@ -176,7 +177,7 @@ public class User implements Serializable, UserDetails {
 	@Override
 	public Collection<? extends GrantedAuthority> getAuthorities() {
 		List<GrantedAuthority> authorities = new ArrayList<>();
-		getRoles().forEach(rol -> authorities.add(new SimpleGrantedAuthority(rol.getNombre())));
+		this.getRoles().forEach(rol -> authorities.add(new SimpleGrantedAuthority(rol.getNombre())));
 		return authorities;
 	}
 
