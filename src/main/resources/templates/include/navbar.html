@@ -40,6 +40,9 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#">Orden</a>
 				</li>
+				<li sec:authorize="hasRole('ROLE_ADMIN')" class="nav-item">
+					<a class="nav-link" th:href="@{/admin}">Admin</a>
+				</li>
 			</ul>
 			<ul class="navbar-nav ml-auto mt-2 mt-lg-0" sec:authorize="isAnonymous()">
 				<li class="nav-item">
