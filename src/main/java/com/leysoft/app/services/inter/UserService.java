@@ -18,7 +18,11 @@ public interface UserService {
 	
 	public User findByUsername(String username);
 	
+	public User findByUsernameJoinFetch(String username);
+	
 	public User findByEmail(String email);
+	
+	public User findByEmailJoinFetch(String email);
 	
 	public List<User> findAll();
 	

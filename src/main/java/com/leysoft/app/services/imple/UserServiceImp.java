@@ -60,8 +60,20 @@ public class UserServiceImp implements UserService {
 	
 	@Transactional(readOnly = true)
 	@Override
+	public User findByUsernameJoinFetch(String username) {
+		return userRepository.findByUsernameJoinFetch(username);
+	}
+	
+	@Transactional(readOnly = true)
+	@Override
 	public User findByEmail(String email) {
 		return userRepository.findByEmail(email);
+	}
+	
+	@Transactional(readOnly = true)
+	@Override
+	public User findByEmailJoinFetch(String email) {
+		return userRepository.findByEmailJoinFetch(email);
 	}
 
 	@Transactional(readOnly = true)
