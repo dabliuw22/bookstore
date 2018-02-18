@@ -1,13 +1,24 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
 	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+	<style th:fragment="style_admin">
+		body, html {
+			height: 100%;
+		}
+	
+		#sidebar {
+	    	min-width: 130px;
+		}
+	</style>
+	<link th:fragment="google_icons" rel="stylesheet"
+		href="https://fonts.googleapis.com/icon?family=Material+Icons"/>
 <body>
 	<div th:fragment="navbar_admin" class="col-2 collapse d-md-flex bg-light pt-2 h-100"
 		id="sidebar">
 		<ul class="nav flex-column flex-nowrap">
-			<li class="nav-item"><a class="nav-link" href="#">Overview</a></li>
+			<li class="nav-item"><a class="nav-link" th:href="@{/admin}">Dashboard</a></li>
 			<li class="nav-item"><a class="nav-link collapsed"
-				href="#submenu1" data-toggle="collapse" data-target="#submenu1">Reports</a>
+				href="#submenu1" data-toggle="collapse" data-target="#submenu1">Books</a>
 				<div class="collapse" id="submenu1" aria-expanded="false">
 					<ul class="flex-column pl-2 nav">
 						<li class="nav-item"><a class="nav-link py-0" href="">Orders</a></li>
@@ -32,8 +43,8 @@
 							</div></li>
 					</ul>
 				</div></li>
-			<li class="nav-item"><a class="nav-link" href="#">Analytics</a></li>
-			<li class="nav-item"><a class="nav-link" href="#">Export</a></li>
+			<li class="nav-item"><a class="nav-link" href="#">Users</a></li>
+			<li class="nav-item"><a class="nav-link" href="#">Orders</a></li>
 		</ul>
 	</div>	
 </body>
