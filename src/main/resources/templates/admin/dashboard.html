@@ -1,15 +1,8 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="base/base :: head"></head>
-<style>
-	body, html {
-		height: 100%;
-	}
-
-	#sidebar {
-    	min-width: 130px;
-	}
-</style>
+<style th:replace="include/navbar_admin :: style_admin"></style>
+<link th:replace="include/navbar_admin :: google_icons"/>
 <body>
 	<header th:replace="include/navbar :: header"></header>
 	<div th:replace="base/base :: information"></div>
@@ -19,7 +12,7 @@
 			<div class="col pt-2">
 				<h2>
 					<a href="" data-target="#sidebar" data-toggle="collapse"
-						class="d-md-none"><i class="fa fa-bars"></i>menu</a> Content
+						class="d-md-none"><i class="material-icons">keyboard_arrow_right</i></a>
 				</h2>
 				<h6 class="hidden-sm-down">Shrink page width to see sidebar
 					collapse</h6>
