@@ -16,18 +16,82 @@
 				</h2>
 				<h6 class="hidden-sm-down">Shrink page width to see sidebar
 					collapse</h6>
-				<p>3 wolf moon retro jean shorts chambray sustainable roof
-					party. Shoreditch vegan artisan Helvetica. Tattooed Codeply Echo
-					Park Godard kogi, next level irony ennui twee squid fap selvage.
-					Meggings flannel Brooklyn literally small batch, mumblecore PBR
-					try-hard kale chips. Brooklyn vinyl lumbersexual bicycle rights,
-					viral fap cronut leggings squid chillwave pickled gentrify
-					mustache. 3 wolf moon hashtag church-key Odd Future. Austin
-					messenger bag normcore, Helvetica Williamsburg sartorial tote bag
-					distillery Portland before they sold out gastropub taxidermy Vice.</p>
+				<canvas class="render-chart" id="myChart" width="400" height="400"></canvas>
 			</div>
 		</div>
 	</div>
 	<footer th:replace="base/base :: footer"></footer>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.1/Chart.min.js"></script>
+	<script type="text/javascript">
+		$(document).ready(function () {
+			/* ------  AJAX  ------ */
+			function solicitud(id) {
+				var url = '/ajax/ejemplo';
+				var method = 'GET';
+				var data = {'id': 1};
+				$.ajax({
+					url: url,
+					method: method,
+					data: data,
+					success: function (response) {
+						renderChart(id, response.labels, response.data);
+					},
+					error: function (error) {},
+				});
+			}
+			
+			/* ------  Render Chart  ------ */
+			function renderChart(id, labels, data) {				
+				var ctx = document.getElementById(id).getContext('2d');
+				var myChart = new Chart(ctx, {
+				    type: 'bar',
+				    data: {
+				        labels: labels,
+				        datasets: [{
+				            label: 'ejemplo',
+				            data: data,
+				            backgroundColor: [
+				                'rgba(255, 99, 132, 0.2)',
+				                'rgba(54, 162, 235, 0.2)',
+				                'rgba(255, 206, 86, 0.2)',
+				                'rgba(75, 192, 192, 0.2)'
+				            ],
+				            borderColor: [
+				                'rgba(255,99,132,1)',
+				                'rgba(54, 162, 235, 1)',
+				                'rgba(255, 206, 86, 1)',
+				                'rgba(75, 192, 192, 1)'
+				            ],
+				            borderWidth: 1
+				        }]
+				    },
+				    options: {
+				        scales: {
+				            yAxes: [{
+				                ticks: {
+				                    beginAtZero:true
+				                }
+				            }]
+				        }
+				    }
+				});	
+			}
+			
+			/* ------  Render All Chart  ------ */
+			function renderCharts() {
+				var charts = $('.render-chart');
+				$.each(charts, function () {
+					var element = $(this);
+					solicitud(element.attr('id'));
+				});
+			}
+			
+			
+			renderCharts();
+			
+			/* ------  Ejecución cada minuto  ------ */
+			//setInterval(renderCharts, 60000);
+		});
+	</script>
 </body>
 </html>
