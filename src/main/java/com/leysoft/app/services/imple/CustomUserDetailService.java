@@ -6,7 +6,6 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
-import com.leysoft.app.entitys.User;
 import com.leysoft.app.services.inter.UserService;
 
 @Service
@@ -17,7 +16,7 @@ public class CustomUserDetailService implements UserDetailsService {
 
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-		User user = userService.findByUsernameJoinFetch(username);
+		UserDetails user = userService.findByUsernameJoinFetch(username);
 		if(user == null) {
 			throw new UsernameNotFoundException("Username no existe");
 		}
