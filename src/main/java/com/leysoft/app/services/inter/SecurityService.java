@@ -12,6 +12,8 @@ public interface SecurityService {
 	
 	public void authentication(User user);
 	
+	public boolean isValid(String role);
+	
 	public void saveUser(UserModel user, HttpServletRequest request) throws MailException, MessagingException;
 	
 	public void resetPasswordUser(User user, HttpServletRequest request) throws MailException, MessagingException;

@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.MailException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -42,6 +43,20 @@ public class SecurityServiceImp implements SecurityService {
 		UserDetails userDetails = userDetailsService.loadUserByUsername(user.getUsername());
 		Authentication authentication = new UsernamePasswordAuthenticationToken(userDetails, userDetails.getPassword(), userDetails.getAuthorities());
 		SecurityContextHolder.getContext().setAuthentication(authentication);
+	}
+	
+	@Override
+	public boolean isValid(String role) {
+		boolean valid = false;
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		if(auth != null && auth.isAuthenticated()) {
+			for(GrantedAuthority authority: auth.getAuthorities()) {
+				if(authority.getAuthority().equals(role)) {
+					valid = true;
+				}
+			}
+		}
+		return valid;
 	}
 	
 	@Override
