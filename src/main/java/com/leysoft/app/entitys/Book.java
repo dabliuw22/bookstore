@@ -10,6 +10,15 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.persistence.Transient;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
+import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity @Table(name = "books")
 public class Book implements Serializable {
@@ -19,42 +28,67 @@ public class Book implements Serializable {
 	@Id @GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
+	@NotEmpty
 	@Column
 	private String nombre;
 	
+	@NotEmpty
 	@Column
 	private String autor;
 	
+	@NotEmpty
 	@Lob
 	@Column
 	private String descripcion;
 	
+	@NotNull
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Temporal(value = TemporalType.DATE)
 	@Column(name = "fecha_publicacion")
 	private Date fechaPublicacion;
 	
+	@NotEmpty
 	@Column
 	private String lenguaje;
 	
+	@NotEmpty
 	@Column
 	private String categoria;
 	
+	@Min(1)
+	@NotNull
 	@Column(name = "numero_paginas")
 	private Integer numeroPaginas;
 	
+	@Min(0)
+	@NotNull
 	@Column
 	private Double precio;
 	
+	@Min(0)
+	@NotNull
 	@Column(name = "precio_envio")
 	private Double precioEnvio;
 	
+	@Min(0)
 	@Column
 	private Integer stock;
 	
 	@Column
 	private boolean activo;
+	
+	@Column
+	private String archivo;
+	
+	@Transient
+	private MultipartFile file;
 
 	public Book() {
 		this.activo = true;
+		this.numeroPaginas = 1;
+		this.precio = 0.0;
+		this.precioEnvio = 0.0;
+		this.stock = 0;
 	}
 
 	public Long getId() {
@@ -151,6 +185,22 @@ public class Book implements Serializable {
 
 	public void setActivo(boolean activo) {
 		this.activo = activo;
+	}
+
+	public String getArchivo() {
+		return archivo;
+	}
+
+	public void setArchivo(String archivo) {
+		this.archivo = archivo;
+	}
+
+	public MultipartFile getFile() {
+		return file;
+	}
+
+	public void setFile(MultipartFile file) {
+		this.file = file;
 	}
 
 	@Override
