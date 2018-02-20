@@ -28,6 +28,7 @@ public class PasswordResetToken implements Serializable {
 	@Column
 	private String token;
 	
+	@Column
 	private boolean activo;
 	
 	@OneToOne
