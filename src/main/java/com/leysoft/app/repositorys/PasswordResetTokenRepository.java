@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 
 import com.leysoft.app.entitys.PasswordResetToken;
@@ -17,6 +18,7 @@ public interface PasswordResetTokenRepository extends JpaRepository<PasswordRese
 	
 	List<PasswordResetToken> findAllByExpireAtLessThan(Date now);
 	
-	@Query("delete from PasswordResetToken as t where t.expireAt <= ?1")
+	@Modifying
+	@Query("delete from PasswordResetToken as t where t.expireAt >= ?1")
 	void detelteAllExpiredSince(Date now);
 }
