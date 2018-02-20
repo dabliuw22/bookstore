@@ -5,10 +5,12 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.scheduling.annotation.EnableAsync;
+import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.leysoft.app.entitys.Role;
 import com.leysoft.app.services.inter.RoleService;
 
+@EnableScheduling
 @EnableAsync
 @SpringBootApplication
 public class BookstoreApplication implements CommandLineRunner {
