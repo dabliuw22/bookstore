@@ -39,6 +39,8 @@ public class UserServiceImp implements UserService {
 		userRepository.save(user);
 	}
 	
+	@Transactional
+	@Override
 	public void save(User user, String password) {
 		user.setPassword(SecurityUtil.passwordEncoder().encode(password));
 		Role rol = roleService.findById(1);
