@@ -14,9 +14,11 @@
 					<a href="" data-target="#sidebar" data-toggle="collapse"
 						class="d-md-none"><i class="material-icons">keyboard_arrow_right</i></a>
 				</h2>
-				<h6 class="hidden-sm-down">Shrink page width to see sidebar
-					collapse</h6>
-				<canvas class="render-chart" id="myChart" width="400" height="400"></canvas>
+				<div class="row">
+					<div class="col-sm-12 col-md-6">
+						<canvas class="render-chart" id="myChart" width="400" height="400"></canvas>
+					</div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -26,7 +28,7 @@
 		$(document).ready(function () {
 			/* ------  AJAX  ------ */
 			function solicitud(id) {
-				var url = '/ajax/ejemplo';
+				var url = '/admin/ajax/ejemplo';
 				var method = 'GET';
 				var data = {'id': 1};
 				$.ajax({
