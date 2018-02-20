@@ -18,7 +18,7 @@ public class AjaxController {
 	private SecurityService securityService;
 	
 	@ResponseBody
-	@GetMapping(value = "/ajax/ejemplo")
+	@GetMapping(value = "/admin/ajax/ejemplo")
 	public Map<String, Object> ejemplo() {
 		Map<String, Object> response = new HashMap<>();
 		Random random = new Random();
