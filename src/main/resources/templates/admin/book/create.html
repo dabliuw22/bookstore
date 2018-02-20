@@ -40,12 +40,18 @@
 						</div>
 						<div class="form-group row">
 							<label for="lenguaje">Lenguaje</label>
-							<input id="lenguaje" type="text" th:field="*{lenguaje}" class="form-control" th:errorclass="'form-control is-invalid'" placeholder="lenguaje"/>
+							<select id="lenguaje" th:field="*{lenguaje}" th:value="${book.lenguaje}" class="form-control" th:errorclass="'form-control is-invalid'">
+								<option value="Castellano" th:text="Castellano"></option>
+								<option value="Ingles" th:text="Ingles"></option>
+							</select>
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('lenguaje')}" th:errors="*{lenguaje}"></small>
 						</div>
 						<div class="form-group row">
 							<label for="categoria">Categoria</label>
-							<input id="categoria" type="text" th:field="*{categoria}" class="form-control" th:errorclass="'form-control is-invalid'" placeholder="categoria"/>
+							<select id="categoria" th:field="*{categoria}" th:value="${book.categoria}" class="form-control" th:errorclass="'form-control is-invalid'">
+								<option value="Ficcion" th:text="Ficción"></option>
+								<option value="Historia" th:text="Historia"></option>
+							</select>
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('categoria')}" th:errors="*{categoria}"></small>
 						</div>
 						<div class="form-group row">
