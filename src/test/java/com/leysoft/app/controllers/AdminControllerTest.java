@@ -8,11 +8,13 @@ import java.io.IOException;
 
 import org.junit.Before;
 import org.junit.Test;
+import org.mockito.ArgumentCaptor;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.leysoft.app.entitys.Book;
 import com.leysoft.app.services.inter.BookService;
@@ -65,9 +67,10 @@ public class AdminControllerTest {
 	public void testAddBookBookBindingResultModel() throws IOException {
 		String viewName = "redirect:/admin";
 		String attributeName = "book";
+		ArgumentCaptor<MultipartFile> multipartFileArgument = ArgumentCaptor.forClass(MultipartFile.class);
 		assertEquals(viewName, adminController.addBook(book, errors, model));
 		verify(errors, times(1)).hasErrors();
-		verify(uploadFileService, times(2)).save(book.getFileArchivo());
+		verify(uploadFileService, times(2)).save(multipartFileArgument.capture());
 		verify(bookService, times(1)).save(book);
 		verify(model, times(0)).addAttribute(attributeName, book);
 	}
