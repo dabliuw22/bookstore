@@ -18,11 +18,17 @@ public class BookValidator implements Validator {
 	public void validate(Object obj, Errors errors) {
 		Book book = (Book) obj;
 		if(book != null) {
-			if(book.getFile().isEmpty()) {
-				errors.rejectValue("file", "book.file", "no puede esta vacio");
+			if(book.getFileArchivo().isEmpty()) {
+				errors.rejectValue("fileArchivo", "book.fileArchivo", "no puede esta vacio");
 			}
-			if(!book.getFile().getContentType().contains("pdf")) {
-				errors.rejectValue("file", "book.file", "debe ser del tipo pdf");
+			if(!book.getFileArchivo().getContentType().contains("pdf")) {
+				errors.rejectValue("fileArchivo", "book.fileArchivo", "debe ser del tipo pdf");
+			}
+			if(book.getFileImagen().isEmpty()) {
+				errors.rejectValue("fileImagen", "book.fileImagen", "no puede esta vacio");
+			}
+			if(!book.getFileImagen().getContentType().contains("image")) {
+				errors.rejectValue("fileImagen", "book.fileImagen", "debe ser del tipo image");
 			}
 		}
 	}
