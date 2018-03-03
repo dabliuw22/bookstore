@@ -42,6 +42,21 @@ public class PasswordResetTokenServiceImp implements PasswordResetTokenService {
 	public List<PasswordResetToken> findAllByExpireAtLessThan(Date now) {
 		return passwordResetTokenRepository.findAllByExpireAtLessThan(now);
 	}
+	
+	@Transactional
+	@Override
+	public void disable(PasswordResetToken passwordResetToken) {
+		if(passwordResetToken.isActivo()) {
+			passwordResetToken.setActivo(false);
+			update(passwordResetToken);
+		}
+	}
+	
+	@Transactional
+	@Override
+	public void update(PasswordResetToken passwordResetToken) {
+		passwordResetTokenRepository.save(passwordResetToken);
+	}
 
 	@Scheduled(initialDelayString = "${scheduled.initial.delay}", fixedRateString = "${scheduled.rate}")
 	@Transactional

@@ -16,5 +16,9 @@ public interface PasswordResetTokenService {
 	
 	public List<PasswordResetToken> findAllByExpireAtLessThan(Date now);
 	
+	public void disable(PasswordResetToken passwordResetToken);
+	
+	public void update(PasswordResetToken passwordResetToken);
+	
 	public void detelteAllExpiredSince();
 }
