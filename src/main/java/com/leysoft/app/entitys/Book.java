@@ -78,10 +78,16 @@ public class Book implements Serializable {
 	private boolean activo;
 	
 	@Column
+	private String imagen;
+	
+	@Column
 	private String archivo;
 	
 	@Transient
-	private MultipartFile file;
+	private MultipartFile fileImagen;
+	
+	@Transient
+	private MultipartFile fileArchivo;
 
 	public Book() {
 		this.activo = true;
@@ -195,12 +201,28 @@ public class Book implements Serializable {
 		this.archivo = archivo;
 	}
 
-	public MultipartFile getFile() {
-		return file;
+	public String getImagen() {
+		return imagen;
 	}
 
-	public void setFile(MultipartFile file) {
-		this.file = file;
+	public void setImagen(String imagen) {
+		this.imagen = imagen;
+	}
+
+	public MultipartFile getFileImagen() {
+		return fileImagen;
+	}
+
+	public void setFileImagen(MultipartFile fileImagen) {
+		this.fileImagen = fileImagen;
+	}
+
+	public MultipartFile getFileArchivo() {
+		return fileArchivo;
+	}
+
+	public void setFileArchivo(MultipartFile fileArchivo) {
+		this.fileArchivo = fileArchivo;
 	}
 
 	@Override
