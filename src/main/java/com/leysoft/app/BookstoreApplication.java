@@ -9,12 +9,16 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 
 import com.leysoft.app.entitys.Role;
 import com.leysoft.app.services.inter.RoleService;
+import com.leysoft.app.services.inter.UploadFileService;
 
 @EnableScheduling
 @EnableAsync
 @SpringBootApplication
 public class BookstoreApplication implements CommandLineRunner {
 
+	@Autowired
+	private UploadFileService uploadFileService;
+	
 	@Autowired
 	private RoleService roleService;
 	
@@ -24,6 +28,9 @@ public class BookstoreApplication implements CommandLineRunner {
 
 	@Override
 	public void run(String... arg0) throws Exception {
+		uploadFileService.deleteAll();
+		uploadFileService.init();
+		
 		Role roleUser = new Role();
 		roleUser.setNombre("ROLE_USER");
 		roleService.save(roleUser);
