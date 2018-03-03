@@ -15,20 +15,27 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.leysoft.app.entitys.PasswordResetToken;
 import com.leysoft.app.entitys.User;
+import com.leysoft.app.services.inter.PasswordResetTokenService;
 import com.leysoft.app.services.inter.SecurityService;
 import com.leysoft.app.services.inter.UserService;
 import com.leysoft.app.utilitys.models.UserModel;
 import com.leysoft.app.utilitys.validators.UserValidator;
 
+@SessionAttributes(value = "currentUser")
 @Controller
 public class UserController {
 	
 	@Autowired
 	private UserService userService;
+	
+	@Autowired
+	private PasswordResetTokenService passwordResetTokenService;
 	
 	@Autowired
 	private SecurityService securityService;
@@ -64,17 +71,21 @@ public class UserController {
 		}
 		User user = passwordResetToken.getUser();
 		securityService.authentication(user);
-		model.addAttribute("user", user);
+		model.addAttribute("currentUser", user);
 		return "user/registro";
 	}
 	
 	@PostMapping(value = "/edit")
-	public String registro(@Valid @ModelAttribute("user") User user, BindingResult errors, Model model) {
+	public String registro(@Valid @ModelAttribute("currentUser") User user, BindingResult errors,
+			Model model, SessionStatus status) {
 		if(!errors.hasErrors()) {
+			PasswordResetToken passwordResetToken = passwordResetTokenService.findByUser(user);
 			userService.update(user);
+			status.setComplete();
+			passwordResetTokenService.disable(passwordResetToken);
 			return "redirect:/";
 		}
-		model.addAttribute("user", user);
+		model.addAttribute("currentUser", user);
 		return "user/registro";
 	}
 	
