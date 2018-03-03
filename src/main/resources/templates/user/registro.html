@@ -8,7 +8,7 @@
 		<div class="card bg-light">
 			<div class="card-header" th:text="'Registro Usuario'"></div>
 			<div class="card-body">
-				<form method="post" th:action="@{/edit}" th:object="${user}">
+				<form method="post" th:action="@{/edit}" th:object="${currentUser}">
 					<div class="form-group row">
 						<label for="username">Username</label>
 						<input id="username" type="text" th:field="*{username}" class="form-control" th:errorclass="'form-control alert-danger'" placeholder="username"/>
