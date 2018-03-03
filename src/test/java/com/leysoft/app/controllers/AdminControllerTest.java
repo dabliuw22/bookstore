@@ -56,13 +56,19 @@ public class AdminControllerTest {
 	@Test
 	public void testAddBookModel() {
 		String viewName = "admin/book/create";
+		String attributeName = "book";
 		assertEquals(viewName, adminController.addBook(model));
+		verify(model, times(1)).addAttribute(attributeName, new Book());
 	}
 
 	@Test
 	public void testAddBookBookBindingResultModel() throws IOException {
 		String viewName = "redirect:/admin";
+		String attributeName = "book";
 		assertEquals(viewName, adminController.addBook(book, errors, model));
+		verify(errors, times(1)).hasErrors();
+		verify(uploadFileService, times(2)).save(book.getFileArchivo());
 		verify(bookService, times(1)).save(book);
+		verify(model, times(0)).addAttribute(attributeName, book);
 	}
 }
