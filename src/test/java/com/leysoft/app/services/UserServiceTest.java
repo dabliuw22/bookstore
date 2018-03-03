@@ -29,7 +29,7 @@ public class UserServiceTest {
 	private UserServiceImp userService;
 	
 	@Before
-	public void setUp() {
+	public void setUp() throws Exception {
 		MockitoAnnotations.initMocks(this);
 	}
 
