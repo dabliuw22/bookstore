@@ -75,9 +75,14 @@
 							<small class="form-text text-danger" th:if="${#fields.hasErrors('stock')}" th:errors="*{stock}"></small>
 						</div>
 						<div class="custom-file">
-							<input type="file" class="custom-file-input" th:field="*{file}" id="file"/>
-							<label class="custom-file-label" for="customFileLang">Seleccionar Archivo</label>
-							<small class="form-text text-danger" th:if="${#fields.hasErrors('file')}" th:errors="*{file}"></small>
+							<input type="file" class="custom-file-input" th:field="*{fileImagen}" id="fileImagen"/>
+							<label class="custom-file-label" for="fileImagen">Seleccionar Imagen</label>
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('fileImagen')}" th:errors="*{fileImagen}"></small>
+						</div>
+						<div class="custom-file">
+							<input type="file" class="custom-file-input" th:field="*{fileArchivo}" id="fileArchivo"/>
+							<label class="custom-file-label" for="fileArchivo">Seleccionar Archivo</label>
+							<small class="form-text text-danger" th:if="${#fields.hasErrors('fileArchivo')}" th:errors="*{fileArchivo}"></small>
 						</div>
 						<input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
 						<div class="form-group row">
