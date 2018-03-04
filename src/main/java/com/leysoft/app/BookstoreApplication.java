@@ -61,7 +61,9 @@ public class BookstoreApplication implements CommandLineRunner {
 	}
 	
 	/**
-	 * Bean para agregar UploadFileService al contexto de Spring.
+	 * Bean para agregar UploadFileService al contexto de Spring. Obligatorio para realizar
+	 * Test con anotaciones de Spring, pues lo usamos en el método run() para crear la carpetas
+	 * donde se guardaran los archivos.
 	 * 
 	 * @return La implementación UploadFileServiceImp.
 	 */
@@ -71,7 +73,8 @@ public class BookstoreApplication implements CommandLineRunner {
 	}
 	
 	/**
-	 * Bean para agregar RoleService al contexto de Spring.
+	 * Bean para agregar RoleService al contexto de Spring. Obligatorio para realizar
+	 * Test con anotaciones de Spring, pues lo usamos para crear roles en el metodo run().
 	 * 
 	 * @return La implementación RoleServiceImp.
 	 */
